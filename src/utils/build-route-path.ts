@@ -30,7 +30,7 @@ export function buildRoutePath(path: string) {
     '(?<$1>[a-z0-9\\-_]+)',
   )
 
-  const pathRegex = new RegExp(`^${pathWithoutParameters}`)
+  const pathRegex = new RegExp(`^${pathWithoutParameters}(?<query>\\?(.*))?$`)
 
   return pathRegex
 }
