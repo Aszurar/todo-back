@@ -1,16 +1,16 @@
 import { ServerResponse } from 'http'
 
-import { ICreatedRequestBody } from '../entities/RequestBody'
+import { ICreateRequestBody } from '../entities/RequestBody'
 
-type createTaskValidationParams = {
+type CreateTaskValidationParams = {
   res: ServerResponse
-  data: ICreatedRequestBody
+  data: ICreateRequestBody
 }
 
 export function createTaskValidation({
   res,
   data,
-}: createTaskValidationParams) {
+}: CreateTaskValidationParams) {
   if (!data) {
     return res.writeHead(400).end()
   }
@@ -19,11 +19,13 @@ export function createTaskValidation({
 
   const hasNotDescription = !description?.trim()
   if (hasNotDescription) {
-    return res.writeHead(400).end()
+    const message = JSON.stringify({ error: 'Description is required' })
+    return res.writeHead(400).end(message)
   }
 
   const hasNotTitle = !title?.trim()
   if (hasNotTitle) {
-    return res.writeHead(400).end()
+    const message = JSON.stringify({ error: 'Title is required' })
+    return res.writeHead(400).end(message)
   }
 }
