@@ -2,6 +2,7 @@ import http from 'node:http'
 
 import { getBodyDataStreamAndParseJSON, IRequest } from './middleware/json'
 import { routes } from './route'
+import { extractQueryParams } from './utils/extract-query-params'
 
 const server = http.createServer(async (req, res) => {
   await getBodyDataStreamAndParseJSON(req as IRequest)
@@ -20,7 +21,11 @@ const server = http.createServer(async (req, res) => {
   if (route) {
     console.log(`Request received for ${url} and method ${method}`)
     const routeParams = url.match(route.path)
-    req.params = { ...routeParams?.groups }
+    const { query, ...params } = routeParams?.groups ?? {}
+
+    req.params = { ...params }
+    req.query = query ? extractQueryParams(query) : {}
+
     return route.handler(req as IRequest, res)
   }
 

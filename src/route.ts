@@ -24,7 +24,9 @@ export const routes: RouteProps[] = [
     method: METHODS.GET,
     path: buildRoutePath('/'),
     handler: (req: IRequest, res: ServerResponse) => {
-      const tasks = getAll(database)
+      const { title, description } = req.query
+
+      const tasks = getAll({ database, title, description })
 
       return res.setHeader('Content-Type', 'application/json').end(tasks)
     },
