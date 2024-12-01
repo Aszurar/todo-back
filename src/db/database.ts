@@ -11,10 +11,26 @@ type IDatabase = {
 export class Database {
   #database: IDatabase = {}
 
+  constructor() {
+    fs.readFile(databasePath, 'utf-8')
+      .then((data) => {
+        this.#database = JSON.parse(data)
+      })
+      .catch(() => {
+        this.#database = {}
+      })
+  }
+
   select(table: string) {
     const data: ITask[] = this.#database[table] ?? []
 
     return data
+  }
+
+  findTaskById(table: string, id: string) {
+    const task = this.#database[table].find((task) => task.id === id)
+
+    return task
   }
 
   #persist() {
@@ -38,5 +54,49 @@ export class Database {
 
     this.#persist()
     return task
+  }
+
+  patchCompleteTask(table: string, id: string) {
+    const taskIndex = this.#database[table].findIndex((task) => task.id === id)
+
+    if (taskIndex > -1) {
+      const task = this.#database[table][taskIndex]
+
+      const taskUpdated = {
+        ...task,
+        completed_at: task.completed_at ? null : new Date(),
+      }
+
+      this.#database[table][taskIndex] = taskUpdated
+      this.#persist()
+      return taskUpdated
+    }
+  }
+
+  update(table: string, id: string, task: ITask) {
+    const taskIndex = this.#database[table].findIndex((task) => task.id === id)
+
+    if (taskIndex > -1) {
+      this.#database[table][taskIndex] = task
+      this.#persist()
+      return task
+    }
+  }
+
+  delete(table: string, id: string) {
+    const isArray = Array.isArray(this.#database[table])
+
+    if (isArray) {
+      const taskIndex = this.#database[table].findIndex(
+        (task) => task.id === id,
+      )
+
+      if (taskIndex > -1) {
+        this.#database[table].splice(taskIndex, 1)
+        this.#persist()
+      } else {
+        return { error: 'Task not found' }
+      }
+    }
   }
 }
