@@ -1,6 +1,9 @@
 import { IncomingMessage } from 'node:http'
 
-export type IRequest = IncomingMessage & { body: unknown }
+export type IRequest = IncomingMessage & {
+  body: unknown
+  params: { [key: string]: string }
+}
 
 export async function getBodyDataStreamAndParseJSON(req: IRequest) {
   const buffer: Uint8Array[] = []

@@ -3,12 +3,12 @@ import { ServerResponse } from 'node:http'
 
 import { createTaskValidation } from '../validations/create'
 import { Database } from './../db/database'
-import { ICreatedRequestBody } from './../entities/RequestBody'
+import { ICreateRequestBody } from './../entities/RequestBody'
 import { ITask } from './../entities/task'
 
 type CreateTaskParams = {
   res: ServerResponse
-  data: ICreatedRequestBody
+  data: ICreateRequestBody
   database: Database
 }
 
