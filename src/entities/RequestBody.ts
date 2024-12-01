@@ -1,6 +1,11 @@
-interface ICreatedRequestBody {
+interface ICreateRequestBody {
   title: string
   description: string
 }
 
-export { ICreatedRequestBody }
+interface IUpdateRequestBody {
+  title?: string
+  description?: string
+}
+
+export { ICreateRequestBody, IUpdateRequestBody }
