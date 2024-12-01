@@ -8,6 +8,12 @@ type IDatabase = {
   [key: string]: ITask[]
 }
 
+type SelectParams = {
+  table: string
+  title?: string
+  description?: string
+}
+
 export class Database {
   #database: IDatabase = {}
 
@@ -21,8 +27,23 @@ export class Database {
       })
   }
 
-  select(table: string) {
-    const data: ITask[] = this.#database[table] ?? []
+  select({ table, title, description }: SelectParams) {
+    let data: ITask[] = this.#database[table] ?? []
+
+    if (title && description) {
+      return (data = data.filter(
+        (task) =>
+          task.title.includes(title) && task.description.includes(description),
+      ))
+    }
+    if (title) {
+      return (data = data.filter((task) => task.title.includes(title)))
+    }
+    if (description) {
+      return (data = data.filter((task) =>
+        task.description.includes(description),
+      ))
+    }
 
     return data
   }

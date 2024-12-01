@@ -3,6 +3,7 @@ import { IncomingMessage } from 'node:http'
 export type IRequest = IncomingMessage & {
   body: unknown
   params: { [key: string]: string }
+  query: { [key: string]: string }
 }
 
 export async function getBodyDataStreamAndParseJSON(req: IRequest) {
