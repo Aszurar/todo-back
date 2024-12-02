@@ -66,8 +66,9 @@
 
 - O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-  1. **[node](https://nodejs.org/pt)**
-  2. **[csv-parser](https://github.com/mafintosh/csv-parser)**
+  1. **[csv-parser](https://github.com/mafintosh/csv-parser)**
+  2. **[node](https://nodejs.org/pt)**
+  3. **[TypeScript](https://www.typescriptlang.org/)**
 
 ---
 
