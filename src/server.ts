@@ -29,7 +29,7 @@ const server = http.createServer(async (req, res) => {
     return route.handler(req as IRequest, res)
   }
 
-  return res.writeHead(404).end('Not found')
+  return res.writeHead(404).end({ error: 'Not found' })
 })
 
 server.listen(3000, () => {
