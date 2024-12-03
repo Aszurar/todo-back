@@ -86,8 +86,9 @@ export class Database {
     if (taskIndex > -1) {
       const task = this.#database[table][taskIndex]
 
-      const taskUpdated = {
+      const taskUpdated: ITask = {
         ...task,
+        updated_at: new Date(),
         completed_at: task.completed_at ? null : new Date(),
       }
 
