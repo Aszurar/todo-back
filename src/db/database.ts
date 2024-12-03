@@ -33,15 +33,18 @@ export class Database {
     if (title && description) {
       return (data = data.filter(
         (task) =>
-          task.title.includes(title) && task.description.includes(description),
+          task.title.toLowerCase().includes(title.toLowerCase()) &&
+          task.description.toLowerCase().includes(description.toLowerCase()),
       ))
     }
     if (title) {
-      return (data = data.filter((task) => task.title.includes(title)))
+      return (data = data.filter((task) =>
+        task.title.toLowerCase().includes(title.toLowerCase()),
+      ))
     }
     if (description) {
       return (data = data.filter((task) =>
-        task.description.includes(description),
+        task.description.toLowerCase().includes(description.toLowerCase()),
       ))
     }
 
