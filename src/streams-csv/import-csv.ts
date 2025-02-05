@@ -17,7 +17,7 @@ async function run() {
   for await (const line of linesParse) {
     const [title, description] = line
 
-    await fetch('http://localhost:3000/task', {
+    await fetch(`http://localhost:3333/task`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

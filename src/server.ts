@@ -20,7 +20,7 @@ const server = http.createServer(async (req, res) => {
 
   if (route) {
     console.log(`Request received for ${url} and method ${method}`)
-    const routeParams = url.match(route.path)
+    const routeParams = RegExp(route.path).exec(url)
     const { query, ...params } = routeParams?.groups ?? {}
 
     req.params = { ...params }
